@@ -1,10 +1,51 @@
 import { useState, useEffect, useRef } from 'react';
+import supabase from '@/config/supabaseClient';
+import { useRouter } from 'next/router';
 
 export default function test() {
 
-
+    const router = useRouter()
     const emailRef = useRef();
-    
+
+async function log() {
+    try {
+      const Email = emailRef.current.value;
+  
+      // Basic email validation
+      if (!/^\S+@\S+\.\S+$/.test(Email)) {
+        console.error('Invalid email address');
+        return;
+      }
+  
+      let { data: users, error } = await supabase
+        .from('user')
+        .select("password")  // Only select the password field
+        .eq('email', Email);
+  
+      if (error) {
+        console.error('Error fetching user:', error);
+        return;
+      }
+  
+      if (users && users.length > 0) {
+        const user = users[0];
+        console.log('Password:', user.password);
+        if(user.password==encryptedMsg){
+            console.log("successss");
+            router.push('/welcome')
+        }
+        else{
+            console.log("fail");
+            console.log(encryptedMsg);
+        }
+      } else {
+        console.log("User not found");
+      }
+    } catch (e) {
+      console.error('An unexpected error occurred:', e);
+    }
+  }
+  
 
 
 
@@ -61,9 +102,10 @@ export default function test() {
   return (
     <>
     <h1>Email:</h1>
-    <input type='email'  />
+    <input type='email' ref={emailRef} />
     <h1>Password:</h1>
-    <input type='password'/>
+    <input type='password' value={msg} onChange={(e) => setMsg(e.target.value)}/>
+    <button onClick={log}>Login</button>
     </>
   );
 }
