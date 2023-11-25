@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import supabase from '@/config/supabaseClient';
 import { useRouter } from 'next/router';
 
-export default function test() {
+export default function login() {
 
     const router = useRouter()
     const emailRef = useRef();
@@ -35,8 +35,7 @@ async function log() {
             router.push('/welcome')
         }
         else{
-            console.log("fail");
-            console.log(encryptedMsg);
+            alert("Invalid credentials")
         }
       } else {
         console.log("User not found");
@@ -101,11 +100,16 @@ async function log() {
 
   return (
     <>
-    <h1>Email:</h1>
-    <input type='email' ref={emailRef} />
-    <h1>Password:</h1>
-    <input type='password' value={msg} onChange={(e) => setMsg(e.target.value)}/>
-    <button onClick={log}>Login</button>
+     <div style={{backgroundImage:'url(login3.jpg)'}} className='flex justify-center items-center h-screen w-screen bg-no-repeat bg-cover'>
+      <div className='bg-transparent backdrop-blur-2xl w-72 h-80 pl-14 pt-14 border border-white rounded-2xl' >
+        <h1 className='text-3xl font-bold text-white relative left-11 bottom-4'>Login</h1>
+    <h1 className='text-white'>Email:</h1>
+    <input className='rounded-lg bg-slate-400' type='email' ref={emailRef} />
+    <h1 className='text-white'>Password:</h1>
+    <input className='rounded-lg bg-slate-400' type='password' value={msg} onChange={(e) => setMsg(e.target.value)}/>
+    <button className='bg-slate-300 text-black w-14 rounded-md relative top-5 left-14' onClick={log}>Login</button>
+    </div>
+    </div>
     </>
   );
 }

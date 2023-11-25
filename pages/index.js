@@ -20,8 +20,13 @@ const router = useRouter();
     { email: Email, name: Name, password: Password },
      ])
     .select()
+     if(error){
+      alert("Name, Email and Password are required")
+     }
+     else{
+    router.push('/login')
 
-    router.push('/test')
+     }
   }
 
   const [msg, setMsg] = useState('');
@@ -77,19 +82,19 @@ const router = useRouter();
   
   return (
     <>
-    <h1>Name:</h1>
-    <input type='text' ref={nameRef}/>
-    <h1>Email:</h1>
-    <input type='email' ref={emailRef}/>
-    <h1>Password:</h1>
-    <input type='password' value={msg} onChange={(e) => setMsg(e.target.value)}/>
-    <button onClick={test}>click</button>
+    <div style={{backgroundImage:'url(login3.jpg)'}} className='flex justify-center items-center h-screen w-screen bg-no-repeat bg-cover'>
+      <div className='bg-transparent backdrop-blur-2xl w-72 h-80 pl-14 pt-14 border border-white rounded-2xl' >
+        <h1 className='text-3xl font-bold text-white relative left-11 bottom-4'>Signup</h1>
+    <h1 className='text-white'>Name:</h1>
+    <input className='rounded-lg bg-slate-400' type='text' ref={nameRef} />
+    <h1 className='text-white'>Email:</h1>
+    <input className='rounded-lg bg-slate-400' type='email' ref={emailRef}/>
+    <h1 className='text-white'>Password:</h1>
+    <input className='rounded-lg bg-slate-400 text-white' placeholder='Password' type='password' value={msg} onChange={(e) => setMsg(e.target.value)}/>
+    <br></br>
+    <button className='bg-slate-300 text-black w-14 rounded-md relative top-5 left-14' onClick={test}>Signup</button>
+    </div>
+    </div>
     </>
   )
 }
-// export async function getStaticProps() {
-//   let {data, error} =  await supabase .from('user').select()
-//   return { props: { 
-//     data,
-//    } }
-// }
